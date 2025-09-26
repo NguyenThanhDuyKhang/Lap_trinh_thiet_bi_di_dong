@@ -1,0 +1,6 @@
+Sau khi học xong môn lập trình di động, em mong muốn nắm vững kiến thức cơ bản để tự xay dựng những ứng dụng có giao diện đẹp mắt, dễ sử dụng với người dùng. Định hướng của em là tập trung chuyên sâu vào lĩnh vực UX/UI Design, rèn luyện khả năng thiết kế trải nghiệm người dùng và giao diện bắt mắt, thân thiện với người dùng. Em muốn kết hợp kỹ năng lập trình và thiết kế để tạo ra các sản phẩm có vừa có tính thẩm mỹ vừa có tính đa dụng cho người dùng, chuẩn bị cho con đường trở thành UX/UI Designer trong tương lai.
+Em tin rằng trong 10 năm tới, lập trình di động vẫn tiếp tục phát triển và thậm chí còn bùng nổ mạnh mẽ hơn vì:
+ - Thiết bị di động ngày càng phổ biến : điện thoại thông minh không còn là những sản phẩm thiết bị xa xỉ mà trở thành công cụ thiết yếu cho học tập, làm việc, giải trí.
+ - Kết nối được với nhiều lĩnh vực: từ thương mại điện tử, y tế, giáo dục, đến tài chính. Hầu hết các ngành đều cần đến các ứng dụng di động để phục vụ khách hàng.
+ - Các công nghệ mới xuất hiện: AI, IoT, 5G hay điện toán đám mây sẽ mở ra cách thức phát triển ứng dụng di động thông minh và tiện lợi hơn.
+ ---> Với những yếu tố trên có thể khẳng định rằng lập trình di động trong 10 năm tới không chỉ phát triển mà còn trở thành một phần quan trọng trong hạ tầng công nghệ toàn cầu. 
