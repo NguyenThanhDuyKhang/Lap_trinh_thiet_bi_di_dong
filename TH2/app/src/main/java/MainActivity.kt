@@ -12,12 +12,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Ánh xạ các view từ XML
+
         val edtEmail = findViewById<EditText>(R.id.edtEmail)
         val tvThongBao = findViewById<TextView>(R.id.tvThongBao)
         val btnKiemTra = findViewById<Button>(R.id.btnKiemTra)
 
-        // Xử lý khi nhấn nút
+
         btnKiemTra.setOnClickListener {
             val email = edtEmail.text.toString().trim()
 
