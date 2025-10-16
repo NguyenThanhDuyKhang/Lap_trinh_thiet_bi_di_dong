@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-// 🔹 Màn hình giao diện chính (Compose function)
+
 @Composable
 fun ComposeIntroScreen() {
     Column(
@@ -49,10 +49,10 @@ fun ComposeIntroScreen() {
     ) {
         Spacer(modifier = Modifier.height(40.dp))
 
-        // 🔸 Phần nội dung giữa màn hình
+
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
 
-            // Hình logo Jetpack Compose
+
             Image(
                 painter = painterResource(id = R.drawable.logo_compose),
                 contentDescription = "Jetpack Compose Logo",
@@ -63,7 +63,7 @@ fun ComposeIntroScreen() {
 
             // Tiêu đề
             Text(
-                text = "Jetpack Compose",
+                text = "Navigation",
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black
@@ -73,7 +73,7 @@ fun ComposeIntroScreen() {
 
             // Mô tả
             Text(
-                text = "Jetpack Compose is a modern UI toolkit for building native Android applications using a declarative programming approach.",
+                text = " Is",
                 fontSize = 14.sp,
                 color = Color.Gray,
                 textAlign = TextAlign.Center,
@@ -81,7 +81,7 @@ fun ComposeIntroScreen() {
             )
         }
 
-        // 🔸 Nút “I’m ready”
+
         Button(
             onClick = { /* TODO: xử lý sự kiện khi bấm nút */ },
             shape = RoundedCornerShape(50),
@@ -90,12 +90,12 @@ fun ComposeIntroScreen() {
                 .fillMaxWidth()
                 .height(48.dp)
         ) {
-            Text("I’m ready", color = Color.White, fontSize = 16.sp)
+            Text("Push", color = Color.White, fontSize = 16.sp)
         }
     }
 }
 
-// 🔹 Thêm Preview để xem giao diện ngay trong Android Studio
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewComposeIntroScreen() {

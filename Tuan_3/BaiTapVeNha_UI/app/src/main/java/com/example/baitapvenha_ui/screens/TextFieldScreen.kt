@@ -1,35 +1,44 @@
 package com.example.baitapvenha_ui.screens
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-@OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class)
+import androidx.navigation.NavController
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TextFieldScreen() {
+fun TextFieldScreen(navController: NavController) {
     var text by remember { mutableStateOf("") }
 
     Scaffold(
-        topBar = { TopAppBar(title = { Text("TextField") }) }
+        topBar = {
+            TopAppBar(
+                title = { Text("TextField Example") },
+                navigationIcon = {
+                    IconButton(onClick = { navController.popBackStack() }) {
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                    }
+                }
+            )
+        }
     ) { padding ->
         Column(
             modifier = Modifier
                 .padding(padding)
-                .padding(16.dp)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             OutlinedTextField(
                 value = text,
                 onValueChange = { text = it },
-                label = { Text("Nhập thông tin") },
-                modifier = Modifier.fillMaxWidth()
+                label = { Text("Nhập tên của bạn") }
             )
-            Spacer(Modifier.height(8.dp))
-            Text(
-                text = "Tự động cập nhật: $text",
-                color = Color.Red
-            )
+
+            Text("Bạn đã nhập: $text")
         }
     }
 }
