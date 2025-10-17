@@ -1,93 +1,165 @@
 package com.example.quanlythuvien.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.quanlythuvien.model.LibraryManager
 import com.example.quanlythuvien.ui.theme.QuanLyThuVienTheme
 import androidx.compose.ui.tooling.preview.Preview
+
 @Composable
 fun LibraryScreen(manager: LibraryManager) {
-    var selectedStudentId by remember { mutableStateOf(1) }
-    var selectedBookId by remember { mutableStateOf(1) }
+    var studentName by remember { mutableStateOf("") }
+    var currentStudent by remember { mutableStateOf("") }
+    var bookName by remember { mutableStateOf("") }
     var message by remember { mutableStateOf("") }
 
+    // Danh sách sách mượn của sinh viên hiện tại
+    val borrowedBooks = remember { mutableStateListOf<String>() }
 
-    Column(modifier = Modifier.padding(16.dp)) {
-        Text("Quản lý thư viện", style = MaterialTheme.typography.titleLarge)
-        Spacer(Modifier.height(12.dp))
-
-        Text("Chọn sinh viên:")
-        DropdownMenuBox(
-            items = manager.getStudents().map { it.name },
-            selectedIndex = selectedStudentId - 1,
-            onItemSelected = { selectedStudentId = it + 1 }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(20.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Top
+    ) {
+        // Tiêu đề
+        Text(
+            "Hệ thống\nQuản lý Thư viện",
+            fontSize = 22.sp,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.padding(bottom = 16.dp)
         )
 
-        Spacer(Modifier.height(12.dp))
-        Text("Chọn sách:")
-        DropdownMenuBox(
-            items = manager.getBooks().map { it.title },
-            selectedIndex = selectedBookId - 1,
-            onItemSelected = { selectedBookId = it + 1 }
-        )
+        // Ô nhập sinh viên + nút thay đổi
+        Row(
+            modifier = Modifier.fillMaxWidth(0.9f),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            OutlinedTextField(
+                value = studentName,
+                onValueChange = { studentName = it },
+                label = { Text("Sinh viên") },
+                singleLine = true,
+                modifier = Modifier.weight(1f)
+            )
 
-        Spacer(Modifier.height(20.dp))
-        Row {
-            Button(onClick = {
-                message = if (manager.borrowBook(selectedStudentId, selectedBookId))
-                    "Mượn thành công!"
-                else "Không thể mượn sách!"
-            }) {
-                Text("Mượn")
-            }
-            Spacer(Modifier.width(16.dp))
-            Button(onClick = {
-                message = if (manager.returnBook(selectedStudentId, selectedBookId))
-                    "Trả thành công!"
-                else "Không thể trả sách!"
-            }) {
-                Text("Trả")
-            }
-        }
+            Spacer(modifier = Modifier.width(8.dp))
 
-        Spacer(Modifier.height(16.dp))
-        Text(message, color = MaterialTheme.colorScheme.primary)
-    }
-}
-
-@Composable
-fun DropdownMenuBox(
-    items: List<String>,
-    selectedIndex: Int,
-    onItemSelected: (Int) -> Unit
-) {
-    var expanded by remember { mutableStateOf(false) }
-
-    Box {
-        OutlinedButton(onClick = { expanded = true }) {
-            Text(items[selectedIndex])
-        }
-        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-            items.forEachIndexed { index, label ->
-                DropdownMenuItem(
-                    text = { Text(label) },
-                    onClick = {
-                        onItemSelected(index)
-                        expanded = false
+            Button(
+                onClick = {
+                    if (studentName.isNotBlank()) {
+                        currentStudent = studentName
+                        message = ""
+                        borrowedBooks.clear()
                     }
-                )
+                }
+            ) {
+                Text("Thay đổi")
             }
         }
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        // Tiêu đề danh sách
+        if (currentStudent.isNotBlank()) {
+            Text(
+                text = "Danh sách sách của $currentStudent:",
+                fontWeight = FontWeight.SemiBold,
+                modifier = Modifier.fillMaxWidth(0.9f)
+            )
+        }
+
+        // KHUNG danh sách sách đã mượn
+        Box(
+            modifier = Modifier
+                .fillMaxWidth(0.9f)
+                .heightIn(min = 120.dp)
+                .background(Color(0xFFF4F4F4))
+                .padding(10.dp)
+        ) {
+            if (borrowedBooks.isEmpty()) {
+                Text(
+                    "Bạn chưa mượn quyển sách nào\nNhấn 'Thêm' để bắt đầu hành trình đọc sách!",
+                    color = Color.Gray,
+                    fontSize = 14.sp,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.align(Alignment.Center)
+                )
+            } else {
+                LazyColumn {
+                    items(borrowedBooks) { book ->
+                        Card(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 4.dp),
+                            colors = CardDefaults.cardColors(containerColor = Color.White)
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier.padding(12.dp)
+                            ) {
+                                Checkbox(checked = true, onCheckedChange = {})
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text(book)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Ô nhập tên sách + nút thêm
+        OutlinedTextField(
+            value = bookName,
+            onValueChange = { bookName = it },
+            label = { Text("Tên sách") },
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth(0.9f)
+        )
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Button(
+            onClick = {
+                if (bookName.isNotBlank()) {
+                    borrowedBooks.add(bookName)
+                    bookName = ""
+                    message = "Đã thêm sách vào danh sách!"
+                } else {
+                    message = "Vui lòng nhập tên sách!"
+                }
+            },
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1565C0)),
+            modifier = Modifier.fillMaxWidth(0.5f)
+        ) {
+            Text("Thêm")
+        }
+
+        Spacer(modifier = Modifier.height(10.dp))
+        Text(message, color = Color(0xFF1565C0), fontSize = 14.sp)
     }
 }
-@Preview(showBackground = true, showSystemUi = true, name = "Library Screen")
+
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun LibraryScreenPreview() {
     QuanLyThuVienTheme {
-        val manager = LibraryManager()
-        LibraryScreen(manager)
+        LibraryScreen(LibraryManager())
     }
 }
