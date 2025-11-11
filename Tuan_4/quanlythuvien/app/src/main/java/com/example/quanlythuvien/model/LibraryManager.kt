@@ -5,16 +5,16 @@ import com.example.quanlythuvien.data.Student
 
 class LibraryManager {
     private val books = mutableListOf(
-        Book(1, "Lập trình Kotlin"),
-        Book(2, "Cấu trúc dữ liệu"),
-        Book(3, "Cơ sở dữ liệu"),
-        Book(4, "Mạng máy tính")
+        Book(1, "Sach 1"),
+        Book(2, "Sach 2"),
+        Book(3, "Sach 3"),
+        Book(4, "Sach 4")
     )
 
     private val students = mutableListOf(
-        Student(1, "Nguyễn Văn A"),
-        Student(2, "Trần Thị B"),
-        Student(3, "Lê Văn C")
+        Student(1, "Nguyen Van A"),
+        Student(2, "Tran Thi B"),
+        Student(3, "Le Van C")
     )
 
     fun getBooks(): List<Book> = books
